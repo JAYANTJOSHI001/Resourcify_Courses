@@ -59,7 +59,7 @@ export default function Sidebar() {
 
 
   return (
-    <Box h='100%' position="fixed">
+    <Box h='100%'>
       <Box h='100%'>
         <Box display={{ base: "block", md: "none" }} h='100%' p="4">
           <Button onClick={isOpen ? onClose : onOpen}>

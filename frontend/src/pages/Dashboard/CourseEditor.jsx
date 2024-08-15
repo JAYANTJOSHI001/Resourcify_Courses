@@ -144,7 +144,7 @@ export default function CourseEditor() {
         <ChakraProvider>
             <Flex h="100vh">
                 <Sidebar />
-                <Box flex="1" p="4">
+                <Box flex="1" p="4" ml="200px">
                     <HStack justifyContent='space-between' w='100%' pb={10}>
                         <VStack>
                             <Text fontSize='30px' fontWeight='bold'>Course Setup</Text>

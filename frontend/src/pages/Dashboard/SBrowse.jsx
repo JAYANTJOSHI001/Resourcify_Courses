@@ -135,45 +135,41 @@ export default function SBrowse() {
         search();
     };
 
+    // console.log("these tags: ", chapters[0].tags);
+
     const renderUniqueTags = () => {
+        // Reduce the chapters to extract all tags
         const allTags = chapters.reduce((accumulator, chapter) => {
-            accumulator.push(...chapter.tags);
+            // Ensure chapter.tags exists and is an array
+            if (Array.isArray(chapter.tags)) {
+                accumulator.push(...chapter.tags);
+            }
             return accumulator;
         }, []);
-        const tagList = [
-            ["nejwndj", "nekdjn", "dkqadj"],
-            ["mdld", "mkmd'", "d,md"],
-            ["jakskd", "ndjk", "dfk"],
-            ["fkf", "rkr", "rrk"],
-            ["fmd", "dmkd", "d,kmf"],
-            ["mdkmd", "dkmd", "dmkdm"],
-            [],
-            ["askjnj", "snsk", "ssjsnkld"],
-            ["dksdmld", "dskmdl", "dlsmd"],
-            ["kd", "kf", "mfm", "md", "m", "d"],
-            ["km", "mk", "mkm", "nj"],
-            ["mkfmdlkfm;ld,dlf;,dlf,d;lf,d;l,fl", ",ekrme;"],
-            ["HTML", "basics"],
-            ["CSS", "Styling"],
-            ["JavaScript", "Programming"],
-            ["hello"],
-            ["mbd"]
-          ];
-
+        
+        console.log("allTags: ", allTags.flat());
+    
+        // Extract all elements from the tagList (which is actually allTags)
         const extractElements = (tagList) => {
-            const elements = [];
-            tagList.forEach(array => {
-              array.forEach(element => {
-                elements.push(element);
-              });
-            });
-            return elements;
+            return tagList.reduce((accumulator, array) => {
+                if (Array.isArray(array)) {
+                    accumulator.push(...array); // Flattening each array into the accumulator
+                }
+                return accumulator;
+            }, []);
         };
-
-        const uniqueTags = Array.from(new Set(extractElements(tagList)));
-
-        return uniqueTags.map(tag => <Tag key={tag} onClick={() => handleTagClick(tag)}>{tag}</Tag>);
+    
+        // Get unique tags by converting the array to a Set and then back to an array
+        const uniqueTags = Array.from(new Set(extractElements([allTags]))); // [allTags] passed as array of arrays
+        console.log(uniqueTags);
+        // Map over the unique tags to return a list of Tag components
+        return uniqueTags.map(tag => (
+            <Tag key={tag} onClick={() => handleTagClick(tag)}>
+                {tag}
+            </Tag>
+        ));
     };
+    
 
     const enrollCourse = async (userId, courseId) => {
         console.log("this is userId", userId);
@@ -232,9 +228,9 @@ export default function SBrowse() {
                         </InputGroup>
                         <Avatar name={userDetails?.username} src='https://bit.ly/tioluwani-kolawole' onClick={handleAvatar} cursor="pointer" />
                     </HStack>
-                    <HStack spacing={4} mb={4} flexWrap="wrap" justifyContent={{ base: 'center', md: 'flex-start' }} w="100%">
+                    {/* <HStack spacing={4} mb={4} flexWrap="wrap" justifyContent={{ base: 'center', md: 'flex-start' }} w="100%">
                         {renderUniqueTags()}
-                    </HStack>
+                    </HStack> */}
                     <Flex wrap='wrap' justifyContent='center' width="90%">
                         {courses.map(course => (
                             <VStack
@@ -249,7 +245,7 @@ export default function SBrowse() {
                                 overflow='hidden'
                                 
                             >
-                                <Img src={`../../../server/${course.thumbnail}`} alt={course.title} aspectRatio={3 / 4} h='150px' objectFit="cover" />
+                                <Img src={"../../../public/img/Image.png"} alt={course.title} aspectRatio={3 / 4} h='150px' objectFit="cover" />
                                 <Text fontWeight='bold' fontSize='20px' noOfLines={2}>{course.title}</Text>
                                 <Text fontWeight='light' noOfLines={1} w="40px">{course.description}</Text>
                                 <HStack>

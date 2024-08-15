@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
     Button, Img, Input, Text, ChakraProvider, Box, Flex, HStack, VStack, Icon, Tag, TagLabel, TagCloseButton, useToast
 } from '@chakra-ui/react';
-import Sidebar from './Student-Components/sidebar';
+import Sidebar from './Creator-Components/sidebarCES';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';

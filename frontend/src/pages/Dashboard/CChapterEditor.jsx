@@ -151,7 +151,7 @@ export default function CChapterEditor() {
         <ChakraProvider>
             <Flex height='100vh'>
                 <Sidebar />
-                <Box flex="1" p="4">
+                <Box flex="1" p="4" ml="200px">
                     <HStack justifyContent='space-between' w='100%' pb={10}>
                         <VStack>
                             <Text fontSize='30px' fontWeight='bold' >Chapter Setup</Text>

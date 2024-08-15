@@ -138,7 +138,7 @@ const CAnalytics = () => {
     <ChakraProvider border='5px solid black'>
       <Flex h='100vh'>
         <Sidebar />
-        <VStack w='100%' p={5}>
+        <VStack w='100%' p={5} ml="200px">
         <HStack justifyContent='space-between' w="100%">
             <HStack spacing={4} w="100%">
                 <HStack border='3px solid gray' w='50%' borderRadius='10px' p={2}>

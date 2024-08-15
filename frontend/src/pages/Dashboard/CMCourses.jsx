@@ -21,6 +21,7 @@ export default function CMCourses() {
     let d= useParams().id;
     const username= d;
     const toast= useToast();
+    let u = userDetails?._id;
 
 
     const handleCourseClick = (title) => {
@@ -94,8 +95,8 @@ export default function CMCourses() {
     }, [username, C]);
     
     let c = courses;
-    let u = userDetails?._id;
-    console.log("This is u",u);
+    
+    console.log("This is c",c[0]?.enrolledBy.length);
 
     const f= courses[0]?.chapters?.length;
     const getTextUntilFirstFullStop = (text) => {
@@ -107,13 +108,13 @@ export default function CMCourses() {
       }; 
     const columnWidth = useBreakpointValue({ base: '100%', md: '45%', lg: '30%' });
 
-    
+    console.log(courses[0]?.thumbnail);
 
     return (
         <ChakraProvider>
             <Flex h='100vh'>
                 <Sidebar />
-                <Box flex="1" p="4">
+                <Box flex="1" p="4" ml="200px">
                     <HStack justifyContent='flex-end'>
                         <Avatar name={userDetails?.username} src='https://bit.ly/tioluwani-kolawole' onClick={handleAvatar} />
                     </HStack>
@@ -154,7 +155,7 @@ export default function CMCourses() {
                                 borderRadius='10'
                                 boxShadow='lg'
                             >
-                                <Img src={`../../../server/${course?.thumbnail}`} alt={course.title} aspectRatio={3/4} h='150px' />
+                                <Img src={`../../../../server/${course?.thumbnail}`} alt={course.title} aspectRatio={3/4} h='150px' />
                                 <Text fontWeight='bold' fontSize='20px' align='left' h='50px'>{course.title}</Text>
                                 <Text fontWeight='light' align='left'>{getTextUntilFirstFullStop(course?.description)}</Text>
                                 <HStack>
@@ -166,9 +167,8 @@ export default function CMCourses() {
                                 <HStack>
                                     <HStack>
                                         <Icon as={PiEyesFill} w={4} h={4} m={1} color='orange'></Icon>
-                                        <Text>Views</Text>
+                                        <Text>{course?.enrolledBy.length} Views</Text>
                                     </HStack>
-                                    <Text>{course.view}</Text>
                                 </HStack>
                                 <Button colorScheme='orange' onClick={() => handleCourseClick(course?._id)}>See Course</Button>
                             </VStack>
