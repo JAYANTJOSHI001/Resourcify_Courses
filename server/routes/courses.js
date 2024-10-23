@@ -2,6 +2,7 @@ import express from 'express';
 import multer from 'multer';
 import { Course } from '../models/Courses.js';
 import { User } from '../models/User.js';
+import { uploadOnCloudinary } from '../utils/cloudinary.js';
 
 const router = express.Router();
 const app = express();
@@ -115,7 +116,10 @@ router.put('/:id', async (req, res) => {
   try {
     const { title, description, tags } = req.body;
     const thumbnail = req.files ? req.files.thumbnail[0].path : null;
-
+    console.log("thumbnail:",thumbnail);
+    const thumb = await uploadOnCloudinary(req.files.thumbnail[0].path)
+    if(!thumb)
+      return res.error("not found ");
     const updatedCourse = await Course.findByIdAndUpdate(
       req.params.id,
       { title, description, thumbnail, tags },

@@ -130,7 +130,6 @@ router.post('/enroll', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        console.log("jihne vi tera raha dakaya");
         console.log("this req:  ", req.body);
         const { username, email, password, role } = req.body;
         console.log("this username:  ", username);
@@ -174,16 +173,15 @@ router.post('/', async (req, res) => {
 router.get('/users/:userId', async (req, res) => {
     try {
         const username = req.params.userId;
-        console.log(`Fetching details for user with username: ${username}`);
+        // console.log(`Fetching details for user with username: ${username}`);
         
-        // Use an object as the filter parameter for findOne
         const user = await User.findOne({ username: username });
         
         if (user) {
-            console.log("i have send data to frontend");
+            // console.log("i have send data to frontend");
             res.status(200).json(user);
         } else {
-            console.log("User not found");
+            // console.log("User not found");
             res.status(404).json({ message: 'User not found' });
         }
     } catch (error) {
@@ -195,11 +193,11 @@ router.get('/users/:userId', async (req, res) => {
 router.get('/users/id/:userId', async (req, res) => {
     try {
         const userId = req.params.userId;
-        console.log(`Fetching details for user with ID: ${userId}`);
+        // console.log(`Fetching details for user with ID: ${userId}`);
         
         // Ensure the userId is a valid ObjectId
         if (!mongoose.Types.ObjectId.isValid(userId)) {
-            console.log("Invalid user ID format");
+            // console.log("Invalid user ID format");
             return res.status(400).json({ message: 'Invalid user ID format' });
         }
         
@@ -356,9 +354,9 @@ router.post('/reset-password/:token', async (req, res) => {
     const { token } = req.params;
     const { password } = req.body;
 
-    console.log("Reset password request received");
-    console.log("Token:", token);
-    console.log("Password:", password);
+    // console.log("Reset password request received");
+    // console.log("Token:", token);
+    // console.log("Password:", password);
 
     try {
         if (!password) {
@@ -375,9 +373,9 @@ router.post('/reset-password/:token', async (req, res) => {
             console.log("Invalid or expired token");
             return res.status(400).json({ message: "Invalid or expired token" });
         }
-
-        console.log("User found:", user.email);
-
+//  
+        // console.log("User found:", user.email);
+// 
         const hashPassword = await bcrypt.hash(password, 10);
         user.password = hashPassword;
         user.resetPasswordToken = undefined;

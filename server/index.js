@@ -13,6 +13,7 @@ import { CourseRouter } from './routes/courses.js';
 import { UserRouter } from './routes/user.js';
 import { ChapterRouter } from './routes/chapters.js';
 import { Course } from './models/Courses.js';
+import { uploadOnCloudinary } from './utils/cloudinary.js';
 
 
 
@@ -145,13 +146,31 @@ app.put('/courses', upload1, async (req, res) => {
 
     // Validate required fields
     if (!title || !description) {
-      console.log('Validation error: Title and description are required');
+      console.log('Validation error: Title and description are required'); 
       return res.status(400).send({ message: 'Title and description are required' });
     }
 
     // Parse JSON strings to JavaScript objects
     const parsedTags = JSON.parse(tags);
     const parsedChapters = JSON.parse(chapters);
+
+    // Upload thumbnail and introVideo to Cloudinary
+    let thumbnailUrl = '';
+    let introVideoUrl = '';
+
+    if (thumbnail) {
+      const thumbnailResponse = await uploadOnCloudinary(thumbnail);
+      if (thumbnailResponse) {
+        thumbnailUrl = thumbnailResponse.url; // Get the Cloudinary URL
+      }
+    }
+
+    if (introVideo) {
+      const introVideoResponse = await uploadOnCloudinary(introVideo);
+      if (introVideoResponse) {
+        introVideoUrl = introVideoResponse.url; // Get the Cloudinary URL
+      }
+    }
 
     // Find the course by title
     let course = await Course.findOne({ title });
@@ -163,16 +182,16 @@ app.put('/courses', upload1, async (req, res) => {
         description,
         tags: parsedTags,
         chapters: parsedChapters,
-        thumbnail: thumbnail ? thumbnail.toString() : '', // Ensure thumbnail is a string
-        introVideo: introVideo ? introVideo.toString() : '' // Ensure introVideo is a string
+        thumbnail: thumbnailUrl, // Use the Cloudinary URL
+        introVideo: introVideoUrl // Use the Cloudinary URL
       });
     } else {
       console.log('Course found, updating existing course');
       course.description = description;
       course.tags = parsedTags;
       course.chapters = parsedChapters;
-      course.thumbnail = thumbnail ? thumbnail.toString() : ''; // Ensure thumbnail is a string
-      course.introVideo = introVideo ? introVideo.toString() : ''; // Ensure introVideo is a string
+      course.thumbnail = thumbnailUrl; // Use the Cloudinary URL
+      course.introVideo = introVideoUrl; // Use the Cloudinary URL
     }
 
     await course.save();
@@ -184,6 +203,7 @@ app.put('/courses', upload1, async (req, res) => {
     res.status(500).send({ message: 'Error saving course details' });
   }
 });
+
 
 // Define upload fields for courses and chapters
 const avatarUpload = upload.single('avatar');

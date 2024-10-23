@@ -1,25 +1,51 @@
 import express from 'express';
 import { Chapters } from '../models/Chapters.js';
+import { uploadOnCloudinary } from '../utils/cloudinary.js';
 
 const router = express.Router();
 
 // Create a new course
 router.post('/', async (req, res) => {
   try {
-    const { title, description, tags , courseTitle} = req.body;
-    const notes = req.files?.notes ? req.files.notes[0].path : null;
-    const video = req.files?.video ? req.files.video[0].path : null;
+    const { title, description, tags, courseTitle } = req.body;
+    
+    let notesUrl = null;
+    let videoUrl = null;
 
-    const newCourse = new Chapters({ title, description, tags, notes, video, courseTitle });
-    await newCourse.save();
+    // Upload notes to Cloudinary if available
+    if (req.files?.notes) {
+      const notesPath = req.files.notes[0].path;
+      const notesResponse = await uploadOnCloudinary(notesPath);
+      if (notesResponse) notesUrl = notesResponse.secure_url;
+    }
 
-    res.status(201).json(newCourse);
+    // Upload video to Cloudinary if available
+    if (req.files?.video) {
+      const videoPath = req.files.video[0].path;
+      console.log('Video Path:', videoPath);
+      const videoResponse = await uploadOnCloudinary(videoPath);
+      console.log('Cloudinary Video Response:', videoResponse);
+      if (videoResponse) videoUrl = videoResponse.secure_url;
+    }
+
+    // Create new chapter document
+    const newChapter = new Chapters({
+      title,
+      description,
+      tags,
+      notes: notesUrl,
+      video: videoUrl,
+      courseTitle,
+    });
+
+    await newChapter.save();
+
+    res.status(201).json(newChapter);
   } catch (err) {
-    console.error('Error creating course:', err); // Log the error
+    console.error('Error creating chapter:', err);
     res.status(500).json({ error: err.message });
   }
 });
-
 // Fetch all chapters
 router.get('/', async (req, res) => {
   try {

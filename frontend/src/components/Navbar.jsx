@@ -8,7 +8,7 @@ export default function Navbar() {
   return (
     <Box bg="gray.100" px={{ base: "4", md: "8" }} py={{ base: "2", md: "4" }}>
       <Flex maxW="90%" mx="auto" align="center" justify="space-between">
-        <Image src="../../public/img/Resourcify.png" alt="Logo" maxW="150px" />
+        <Image src="https://res.cloudinary.com/dsn4qpuwh/image/upload/v1729687241/resourcify_1_qp9ipb.png" alt="Logo" maxW="150px" />
 
         <HStack display={{ base: "none", md: "flex" }} spacing="20px" ml="20px">
           <Box><NavLink to="/">Home</NavLink></Box>

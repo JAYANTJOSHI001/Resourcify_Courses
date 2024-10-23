@@ -28,7 +28,7 @@ export default function Navbar(){
     <Box bg="white" py={{ base: "10px", md: "20px" }} px={{ base: "20px", md: "100px" }}>
         <Flex direction={{ base: "column", md: "row" }} align="start" justify="space-between">
           <Box mb={{ base: "20px", md: "0" }}>
-            <Image src="../../public/img/Resourcify.png" alt="Logo" maxWidth="150px" pb="20px" />
+            <Image src="https://res.cloudinary.com/dsn4qpuwh/image/upload/v1729687241/resourcify_1_qp9ipb.png" alt="Logo" maxWidth="150px" pb="20px" />
             <List spacing={4}>
               <ListItem>
                 <ListIcon as={EmailIcon} color='black' />

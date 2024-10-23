@@ -80,7 +80,7 @@ export default function CSidebar() {
           display={{ base: isOpen ? "block" : "none", md: "block" }}
         >
           <VStack align="start" direction={direction} spacing={{ base: 2, md: 4 }}>
-            <Image src="../../../../../public/img/Resourcify.png" alt="Logo" maxW={{ base: "100px", md: "150px" }} />
+            <Image src="https://res.cloudinary.com/dsn4qpuwh/image/upload/v1729687241/resourcify_1_qp9ipb.png" alt="Logo" maxW={{ base: "100px", md: "150px" }} />
             <HStack
               _hover={{ bg: '#E5B673', borderRight: { md: "5px solid #D88511" }, color: "gray.100" }}
               width="full"
