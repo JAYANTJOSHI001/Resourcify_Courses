@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Img, Progress, Text, useBreakpointValue, ChakraProvider, Box, Flex, HStack, VStack, Tag, Avatar } from '@chakra-ui/react';
+import { Img, Progress, Text, useBreakpointValue, Button, ChakraProvider, Box, Flex, HStack, VStack, Tag, Avatar } from '@chakra-ui/react';
+import { useToast } from '@chakra-ui/react';
 import Sidebar from './Student-Components/sidebar';
 import { Icon } from '@chakra-ui/react';
 import { FiClock, FiCheckCircle } from 'react-icons/fi';
@@ -12,8 +13,44 @@ export default function SECourses() {
     const [courses, setCourses] = useState([]);
     const [userDetails, setUserDetails] = useState(null);
     const [error, setError] = useState(null); // Error state to handle errors
+    const toast = useToast();
+
     let d = useParams().uid;
     const username = d;
+
+    const enrollCourse = async (userId, courseId) => {        
+        try {
+            const response = await axios.post('http://localhost:3000/auth/enroll', { userId, courseId });
+            const res = await axios.post('http://localhost:3000/auth/courses/enroll', { userId, courseId });
+            if (response.status === 200 && res.status === 200) {
+                toast({
+                    title: "Success",
+                    description: "Course enrolled successfully",
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                });
+
+                navigate(`/course/${userId}/${courseId}`);
+            } else {
+                toast({
+                    title: "Error",
+                    description: response.data.message,
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                });
+            }
+        } catch (error) {
+            toast({
+                title: "Error",
+                description: error.response?.data?.message || error.message,
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+            });
+        }
+    };
 
     const fetchUserDetails = async (username) => {
         try {
@@ -125,7 +162,7 @@ export default function SECourses() {
                                     borderRadius='10'
                                     boxShadow='lg'
                                 >
-                                    <Img src={`../../../server/${course.thumbnail}`} alt={course.title} aspectRatio={3/4} h='150px' />
+                                    <Img src={`${course.thumbnail}`} alt={course.title} aspectRatio={3/4} h='150px' />
                                     <Text fontWeight='bold' fontSize='20px' align='left' h='50px'>{course.title}</Text>
                                     <Text fontWeight='light' align='left'>{course.description}</Text>
                                     <HStack>
@@ -134,6 +171,15 @@ export default function SECourses() {
                                         </Box>
                                         <Text>{course.chapters.length} Chapters</Text>
                                     </HStack>
+                                    <Button
+                                        bg='orange.300'
+                                        color='white'
+                                        size='xs'
+                                        _hover={{ color: 'orange.300', bg:"white" , border: '3px solid orange' }}
+                                        onClick={() => enrollCourse(userDetails._id, course._id)}
+                                    >
+                                        Enroll Now
+                                    </Button>
                                 </VStack>
                             ))
                         )}

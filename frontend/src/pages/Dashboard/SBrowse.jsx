@@ -245,7 +245,7 @@ export default function SBrowse() {
                                 overflow='hidden'
                                 
                             >
-                                <Img src={"../../../public/img/Image.png"} alt={course.title} aspectRatio={3 / 4} h='150px' objectFit="cover" />
+                                <Img src={course.thumbnail} alt={course.title} aspectRatio={3 / 4} h='150px' objectFit="cover" />
                                 <Text fontWeight='bold' fontSize='20px' noOfLines={2}>{course.title}</Text>
                                 <Text fontWeight='light' noOfLines={1} w="40px">{course.description}</Text>
                                 <HStack>

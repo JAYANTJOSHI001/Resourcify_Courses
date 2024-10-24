@@ -23,7 +23,7 @@ export default function OurCourses() {
           </Box>
           <Box textAlign={{base : 'left', md : 'right'}}>
             <Button border='1px solid black' _hover={{bg : 'black', color : 'white'}}>
-              <NavLink to="/courses">View all</NavLink>
+              <NavLink to="/signup">View all</NavLink>
             </Button>
           </Box>
         </SimpleGrid>

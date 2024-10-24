@@ -169,7 +169,7 @@ function CChapterView() {
                         >
                             <AspectRatio ratio={16 / 9}>
                                 <video
-                                    src={`../../../../server/${chapter.video}`}
+                                    src={`${chapter.video}`}
                                     controls
                                     onEnded={handleChapterComplete} 
                                 />

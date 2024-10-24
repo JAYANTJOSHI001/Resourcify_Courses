@@ -139,6 +139,7 @@ function ChapterView() {
     const no_of_completed_chapters=filteredChap.length;
     const percentage_completed=(no_of_completed_chapters/total_no_of_chapters)*100;
 
+
     return (
         <ChakraProvider>
             <Flex h="100%" flexDirection={{ base: 'column', lg: 'row' }}>
@@ -168,7 +169,7 @@ function ChapterView() {
                         >
                             <AspectRatio ratio={16 / 9}>
                                 <video
-                                    src='../../../../public/img/Eduvid.mp4'
+                                    src={`${chapter[0].video}`}
                                     controls
                                     onEnded={handleChapterComplete} 
                                 />

@@ -98,7 +98,7 @@ function ChapterView() {
                         >
                             <AspectRatio ratio={16 / 9}>
                                 <video
-                                    src={`../../../../server/${course.introVideo}`}
+                                    src={`${course.introVideo}`}
                                     controls
                                     onEnded={handleVideoEnd}
                                     style={{ width: '100%' }}

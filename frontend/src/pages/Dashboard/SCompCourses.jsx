@@ -124,7 +124,7 @@ export default function SECourses() {
                                     borderRadius='10'
                                     boxShadow='lg'
                                 >
-                                    <Img src={`../../../server/${course.thumbnail}`} alt={course.title} aspectRatio={3/4} h='150px' />
+                                    <Img src={`${course.thumbnail}`} alt={course.title} aspectRatio={3/4} h='150px' />
                                     <Text fontWeight='bold' fontSize='20px' align='left' h='50px'>{course.title}</Text>
                                     <Text fontWeight='light' align='left'>{course.description}</Text>
                                     <HStack>
