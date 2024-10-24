@@ -107,7 +107,7 @@ export default function SECourses() {
                     <Flex wrap='wrap' justifyContent='center' alignContent="center">
                         {courses.length === 0 ? (
                             <VStack spacing={0}>
-                                <Img src="../../../public/img/notfound.png" height='400px' mt={8}/>
+                                <Img src="https://res.cloudinary.com/dsn4qpuwh/image/upload/v1729768887/notfound_ydrlvh.png" height='400px' mt={8}/>
                                 <Text fontSize="2xl" fontWeight="bold" mt={8}>You are not completed any courses.</Text>
                                 <Text fontSize="lg" mt={4}>Enroll & Complete a course now to start learning!</Text>
                                 <Text fontSize="lg" mt={4}>Tap on Explore Button to get started.</Text>
